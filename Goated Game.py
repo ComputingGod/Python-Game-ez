@@ -1,7 +1,11 @@
 from random import randint
 from time import sleep
-from shapes import Paper, Rectangle, Oval, Triangle
 from room import Room
+from item import Item
+from character import Character
+from character import Enemy
+
+print('\n')
 
 kitchen = Room('kitchen')
 kitchen.set_description("A dank and dirty room buzzing with flies")
@@ -17,7 +21,18 @@ dining_hall.link_room(kitchen, 'north')
 dining_hall.link_room(ballroom, "west")
 ballroom.link_room(dining_hall, "east")
 
+dave = Enemy("Dave", "A smelly zombie")
+dave.set_conversation("Brrlgrh... rgrhl... brains...")
+dave.set_weakness('cheese')
+
 current_room = kitchen
+
+dave.describe()
+dave.talk()
+
+print("What will you fight with?")
+fight_with = input()
+dave.fight(fight_with)
 
 while True:
     print('\n')
