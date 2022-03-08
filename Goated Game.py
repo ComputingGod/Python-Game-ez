@@ -48,6 +48,8 @@ while dead == False:
     elif command == "talk":
         if inhabitant is not None:
             inhabitant.talk()
+        else:
+            print('There is no one here to talk with')
        
     elif command == "fight":
 
