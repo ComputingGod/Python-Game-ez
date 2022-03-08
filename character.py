@@ -36,7 +36,7 @@ class Enemy(Character):
     def set_weakness(self, item_weakness):
         self.weakness = item_weakness
     
-    def get_weakness():
+    def get_weakness(self):
         return self.weakness
 
     def fight(self, combat_item):
@@ -46,3 +46,15 @@ class Enemy(Character):
         else:
             print(self.name + " crushes you, puny adventurer")
             return False
+            
+    def steal(self):
+        print("You steal from " + self.name)
+
+class Friend(Character):
+  
+    def __init__(self, char_name, char_description):
+        super().__init__(char_name, char_description)
+        self.feeling = None
+
+    def hug(self):
+        print(self.name + " hugs you back!")
