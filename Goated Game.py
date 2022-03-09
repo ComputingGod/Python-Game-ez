@@ -15,10 +15,49 @@ ballroom.set_description("A vast room with a shiny wooden floor; huge candlestic
 dining_hall = Room('dining hall')
 dining_hall.set_description("A large room with ornate golden decorations on each wall")
 
-kitchen.link_room(dining_hall, 'south')
-dining_hall.link_room(kitchen, 'north')
-dining_hall.link_room(ballroom, "west")
-ballroom.link_room(dining_hall, "east")
+toilet_downstairs = Room('downstairs toilet')
+toilet_downstairs.set_description('A small and cramped room filled with a nasty stench.')
+
+toilet_upstairs = Room('upstairs toilet')
+toilet_upstairs.set_description('A humid room with a broken toilet; a window is open above a huge pipe.')
+
+corridor = Room('corridor')
+corridor.set_description("A long room with many unpainted doors.")
+
+hallway = Room('hallway')
+hallway.set_description("A dim room with a large mirror.")
+
+study = Room('study')
+study.set_description("A dusty room with a single desk and cracked windows.")
+
+bedroom_kids = Room('kids bedroom')
+bedroom_kids.set_description('A bright room with rainbow wallpaper and a bunk bed.')
+
+bedroom_master = Room('master bedroom')
+bedroom_master.set_description('An old room with peeling wallpaper and a large bed.')
+
+stairs = Room('stairs')
+stairs.set_description('A creaky staircase with missing planks.')
+
+pipe = Room('pipe')
+pipe.set_description('A steep pipe that you are unable to climb back up.')
+
+hidden_sewer = Room('hidden sewer')
+hidden_sewer.set_description('An empty sewer, unused for many years; rats surround you.')
+
+balcony = Room("balcony")
+balcony.set_description("The parent's balcony; an ashtray sits on a table.")
+
+patio = Room('patio')
+patio.set_description('A stone floor with medieval railings; stairs lead to the garden.')
+
+garden = Room('garden')
+garden.set_description()
+
+toilet_downstairs.link_room(kitchen, 'west')
+kitchen.link_room(toilet_downstairs, 'east')
+
+print('There are '+str(Room.number_of_rooms)+ ' rooms to explore.')
 
 dave = Enemy("Dave", "A smelly zombie")
 dave.set_conversation("Brrlgrh... rgrhl... brains...")
@@ -40,8 +79,21 @@ while dead == False:
     if inhabitant is not None:
         inhabitant.describe()
 
-    command = input("> ")
+    command = input("\n> ")
     
+    if current_room == hidden_sewer:
+        print('You are unable to do anything as the rats crawl around you.')
+        command = input('\n> ')
+        print('They start to wriggle under your clothes and bite you.')
+        command = input('\n> ')
+        print('They pull you onto the floor and completely cover you.')
+        command = input('\n> ')
+        print('You begin to suffocate as they climb into your mouth.')
+        command = input('\n> ')
+        print('You suffocate and die.')
+        dead=True
+        break
+
     if command in ["north", "south", "east", "west"]:
         current_room = current_room.move(command)
     
@@ -61,7 +113,6 @@ while dead == False:
                 current_room.set_character(None)
             else:
                 print("Oh dear, you lost the fight.")
-                print("That's the end of the game")
                 dead = True
         else:
             print("There is no one here to fight with")        
@@ -74,4 +125,9 @@ while dead == False:
                 inhabitant.hug()
         else:
             print("There is no one here to hug :(")
-            
+
+if dead=True:
+    print('You lost the game')
+
+else:
+    print('Well done for making it out alive.')
