@@ -5,6 +5,7 @@ from item import Item
 from character import Enemy, Friend
 
 print('\n')
+enemies=[]
 
 kitchen = Room('kitchen')
 kitchen.set_description("A dank and dirty room buzzing with flies")
@@ -39,11 +40,14 @@ bedroom_master.set_description('An old room with peeling wallpaper and a large b
 stairs = Room('stairs')
 stairs.set_description('A creaky staircase with missing planks.')
 
-pipe = Room('pipe')
-pipe.set_description('A steep pipe that you are unable to climb back up.')
+hidden_pipe1 = Room('hidden pipe')
+hidden_pipe1.set_description('A hidden steep pipe that leads to an old sewer.')
 
-hidden_sewer = Room('hidden sewer')
-hidden_sewer.set_description('An empty sewer, unused for many years; rats surround you.')
+hidden_pipe2 = Room('further down the hidden pipe')
+hidden_pipe2.set_description('You are unable to climb back up the pipe. See what lays ahead!')
+
+sewer = Room('sewer')
+sewer.set_description('An empty sewer, unused for many years; rats surround you.')
 
 balcony = Room("balcony")
 balcony.set_description("The parent's balcony; an ashtray sits on a table.")
@@ -52,10 +56,72 @@ patio = Room('patio')
 patio.set_description('A stone floor with medieval railings; stairs lead to the garden.')
 
 garden = Room('garden')
-garden.set_description()
+garden.set_description('Overgrown with vines and shrubbery.')
+
+doorstep = Room('doorstep')
+doorstep.set_description('A stone step in front of a giant wooden door.')
+
+porch = Room('porch')
+porch.set_description('A boot room full of cobwebs.')
+
+gate = Room('gate')
+gate.set_description('A tall and rusty metal gate.')
 
 toilet_downstairs.link_room(kitchen, 'west')
 kitchen.link_room(toilet_downstairs, 'east')
+
+patio.link_room(kitchen, 'north')
+kitchen.link_room(patio, 'south')
+
+garden.link_room(patio, 'east')
+patio.link_room(garden, 'west')
+
+garden.link_room(doorstep, 'north')
+doorstep.link_room(garden, 'south')
+
+doorstep.link_room(porch, 'east')
+porch.link_room(doorstep, 'west')
+
+hallway.link_room(porch, 'west')
+porch.link_room(hallway, 'east')
+
+ballroom.link_room(hallway, 'south')
+hallway.link_room(ballroom, 'north')
+
+dining_hall.link_room(hallway, 'north')
+hallway.link_room(dining_hall, 'south')
+
+hallway.link_room(corridor, 'east')
+corridor.link_room(hallway, 'west')
+
+corridor.link_room(kitchen, 'south')
+kitchen.link_room(corridor, 'north')
+
+corridor.link_room(study, 'east')
+study.link_room(corridor, 'west')
+
+corridor.link_room(stairs, 'north')
+stairs.link_room(corridor, 'south')
+
+stairs.link_room(bedroom_kids, 'east')
+bedroom_kids.link_room(stairs, 'west')
+
+stairs.link_room(toilet_upstairs, 'west')
+toilet_upstairs.link_room(stairs, 'east')
+
+toilet_upstairs.link_room(hidden_pipe1, 'north')
+hidden_pipe1.link_room(toilet_upstairs, 'south')
+
+hidden_pipe1.link_room(hidden_pipe2, 'north')
+
+hidden_pipe2.link_room(sewer, 'north')
+
+stairs.link_room(bedroom_master, 'north')
+bedroom_master.link_room(stairs, 'south')
+
+bedroom_master.link_room(balcony, 'north')
+balcony.link_room(bedroom_master, 'south')
+
 
 print('There are '+str(Room.number_of_rooms)+ ' rooms to explore.')
 
@@ -63,17 +129,21 @@ dave = Enemy("Dave", "A smelly zombie")
 dave.set_conversation("Brrlgrh... rgrhl... brains...")
 dave.set_weakness('cheese')
 dining_hall.set_character(dave)
+enemies.append(dave)
 
 henry = Friend('Henry', 'A charming butler')
 henry.set_conversation('How do you do?')
 ballroom.set_character(henry)
 
-current_room = kitchen
+current_room = doorstep
 
 dead = False
 while dead == False:
     print("\n")         
     current_room.get_details()
+    if current_room == gate:
+        print('You found the exit!')
+        break
 
     inhabitant = current_room.get_character()
     if inhabitant is not None:
@@ -81,7 +151,7 @@ while dead == False:
 
     command = input("\n> ")
     
-    if current_room == hidden_sewer:
+    if current_room == sewer:
         print('You are unable to do anything as the rats crawl around you.')
         command = input('\n> ')
         print('They start to wriggle under your clothes and bite you.')
@@ -93,10 +163,10 @@ while dead == False:
         print('You suffocate and die.')
         dead=True
         break
-
+    
     if command in ["north", "south", "east", "west"]:
         current_room = current_room.move(command)
-    
+
     elif command == "talk":
         if inhabitant is not None:
             inhabitant.talk()
@@ -111,6 +181,15 @@ while dead == False:
             if inhabitant.fight(fight_with) == True:
                 print("Hooray, you won the fight!")
                 current_room.set_character(None)
+                enemies.remove(inhabitant)
+                if len(enemies)>1:
+                    print('You have '+len(enemies)+' enemies remaining.')
+                elif len(enemies)==1:
+                    print('You have '+len(enemies)+' enemies remaining.')
+                elif len(enemies)==0:
+                    print('You have defeated all the enemies, the exit has now been unlocked, go and find it!')
+                    doorstep.link_room(gate, 'west')
+                    
             else:
                 print("Oh dear, you lost the fight.")
                 dead = True
@@ -126,7 +205,7 @@ while dead == False:
         else:
             print("There is no one here to hug :(")
 
-if dead=True:
+if dead==True:
     print('You lost the game')
 
 else:
