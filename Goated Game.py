@@ -1,7 +1,6 @@
 from random import randint
 from time import sleep
 from room import Room
-from item import Item
 from character import Enemy, Friend
 
 print('\n')
@@ -130,6 +129,8 @@ dave.set_conversation("Brrlgrh... rgrhl... brains...")
 dave.set_weakness('cheese')
 dining_hall.set_character(dave)
 enemies.append(dave)
+
+freddie = Enemy('Freddie', 'A little boy with two left feet.')
 
 henry = Friend('Henry', 'A charming butler')
 henry.set_conversation('How do you do?')
