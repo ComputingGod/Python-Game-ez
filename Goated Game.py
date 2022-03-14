@@ -4,6 +4,8 @@ from room import Room
 from character import Enemy, Friend
 
 print('\n')
+print('Commands:\nnorth - move north\neast - move east\nsouth - move south\nwest - move west\nfight - fight enemy in your room\ntalk - talk to character in your room\nhug - hug friend in your room\n')
+print('You must kill all the enemies and find the exit!\n')
 enemies=[]
 
 kitchen = Room('kitchen')
