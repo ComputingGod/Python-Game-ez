@@ -154,6 +154,11 @@ ned = Friend('Ned', 'A charming butler with an annoying accent.')
 ned.set_conversation('How do you do, chief?')
 ballroom.set_character(ned)
 
+gibby = Friend('Gibby', 'The GOAT of coding.')
+gibby.set_conversation('E-Giant and E-Barbs are balanced.')
+hidden_pipe1.set_character(gibby)
+
+
 current_room = doorstep
 
 dead = False
@@ -202,9 +207,9 @@ while dead == False:
                 current_room.set_character(None)
                 enemies.remove(inhabitant)
                 if len(enemies)>1:
-                    print('You have '+len(enemies)+' enemies remaining.')
+                    print('You have '+str(len(enemies))+' enemies remaining.')
                 elif len(enemies)==1:
-                    print('You have '+len(enemies)+' enemies remaining.')
+                    print('You have '+str(len(enemies))+' enemies remaining.')
                 elif len(enemies)==0:
                     print('You have defeated all the enemies, the exit has now been unlocked, go and find it!')
                     doorstep.link_room(gate, 'west')

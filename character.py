@@ -8,6 +8,7 @@ class Character():
 
     # Describe this character
     def describe(self):
+        print('\n')
         print( self.name + " is here!" )
         print( self.description )
 
