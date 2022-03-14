@@ -130,11 +130,27 @@ dave.set_weakness('cheese')
 dining_hall.set_character(dave)
 enemies.append(dave)
 
-freddie = Enemy('Freddie', 'A little boy with two left feet.')
+freddie = Enemy('Freddie', 'A little boy with two left feet')
+freddie.set_conversation('y=mx+c.... y^2+x^2=1.....')
+freddie.set_weakness('football')
+corridor.set_character(freddie)
+enemies.append(freddie)
 
-henry = Friend('Henry', 'A charming butler')
-henry.set_conversation('How do you do?')
-ballroom.set_character(henry)
+tallo = Enemy('Tallo', 'A kiddy fiddler')
+tallo.set_conversation('She said she was 16......')
+tallo.set_weakness('consent')
+bedroom_kids.set_character(tallo)
+enemies.append(tallo)
+
+toby = Enemy('Toby', 'Supermarket worker')
+toby.set_conversation('I am not in charge of custard donuts......')
+toby.set_weakness('waitrose')
+kitchen.set_character(toby)
+enemies.append(toby)
+
+ned = Friend('Ned', 'A charming butler with an annoying accent.')
+ned.set_conversation('How do you do, chief?')
+ballroom.set_character(ned)
 
 current_room = doorstep
 
